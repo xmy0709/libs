@@ -1,0 +1,59 @@
+﻿  
+代理：
+'/api':{
+            target:"http://localhost:3000/",
+            changeOrigin:true,
+            pathRewrite:{
+                '^/api':''
+            }
+        }
+
+1. 全局下载
+	npm install express-generator@4 -g
+2. 进入目录,vue-cli  根目录运行
+	express --view=ejs server
+	***会多一个  server  目录
+	运行命令：
+	     	cd server
+	     	npm install
+	     	DEBUG=server:* npm start
+3. routes/index.js  ===>操作
+
+****************mysql*******************
+
+1. mysql管理工具
+	下载链接：http://soft.onlinedown.net/soft/535000.htm
+2. 下载mysql
+	连接地址：https://dev.mysql.com/downloads/mysql/
+		帐号:root
+		密码:rootroot
+
+3. mysql管理工具如何使用
+	新建数据库==》新建表==》新建字段
+4. 在项目中下载mysql
+	server目录中，执行： npm install mysql --save
+5. 引入mysql
+
+
+//mysql
+var mysql = require('mysql'); 
+
+var conn = mysql.createConnection({
+  host     : 'localhost', //数据库ip
+  user     : 'root',        //数据库 用户名
+  password : 'root',     //数据库 密码
+  database : 'login'    //数据库名
+});
+
+conn.connect();
+
+module.exports = conn;
+
+
+//routes index.js
+router.get('/iconList', function (req, res, next) {
+  conn.query('SELECT * from icons', function (error, results, fields) {
+       if (error) throw error;
+      res.send(results);
+  });
+});
